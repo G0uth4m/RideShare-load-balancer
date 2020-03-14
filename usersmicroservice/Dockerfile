@@ -8,9 +8,3 @@ COPY . /app_users
 ENV TEAM_NAME=CC_0132_1017_1025_1666
 
 RUN pip3 install -r requirements.txt
-
-#EXPOSE 80
-
-#ENTRYPOINT ["python3"]
-#CMD ["views.py"]
-

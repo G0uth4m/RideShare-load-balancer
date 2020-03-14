@@ -15,4 +15,4 @@ services:
 
   mongousers:
     container_name: mongousers
-    image: mongo:4.0.8
+    image: mongo:latest

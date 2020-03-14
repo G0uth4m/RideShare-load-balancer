@@ -46,9 +46,9 @@ def add_user():
 @app.route('/api/v1/users/<username>', methods=["DELETE"])
 def remove_user(username):
     increment_requests_count()
-    if check_rides_joined_or_created_by_user(username):
-        # print("User has a ride created or joined. User can't be deleted")
-        return Response(status=400)
+    # if check_rides_joined_or_created_by_user(username):
+    #     # print("User has a ride created or joined. User can't be deleted")
+    #     return Response(status=400)
 
     post_data = {'column': '_id', 'delete': username, 'table': 'users'}
     response = requests.post('http://' + ip_port + '/api/v1/db/write', json=post_data)
@@ -172,12 +172,12 @@ def check_rides_joined_or_created_by_user(username):
 
 
 def increment_requests_count():
-    f = open("requests_count.txt", "r+")
+    f = open("requests_count.txt", "r")
     count = int(f.read())
-    f.seek(0)
-    f.write(str(count + 1))
-    f.truncate()
     f.close()
+    f2 = open("requests_count.txt", "w")
+    f2.write(str(count + 1))
+    f2.close()
 
 
 if __name__ == "__main__":

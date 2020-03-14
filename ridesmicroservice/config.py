@@ -12,4 +12,4 @@ areas.pop(0)
 areas.pop(-1)
 
 ip_port = '127.0.0.1:80'
-users_hostname = "users:80"
+users_hostname = "users:80" #give load balancer IP
