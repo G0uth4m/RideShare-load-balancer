@@ -1,5 +1,5 @@
 from flask import Flask, request, Response, jsonify
-from ridesmicroservice.config import db, areas, ip_port, users_hostname, rides_dns_name
+from ridesmicroservice.config import db, areas, ip_port, load_balancer, rides_dns_name
 import requests
 from datetime import datetime
 
@@ -300,7 +300,7 @@ def clear_db():
 
 
 def isUserPresent(username):
-    response = requests.get('http://' + users_hostname + '/api/v1/users', header={"Origin": rides_dns_name})
+    response = requests.get('http://' + load_balancer + '/api/v1/users', headers={"Origin": rides_dns_name})
     return response.status_code != 400 and username in response.json()
 
 
