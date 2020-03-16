@@ -237,6 +237,15 @@ def write_to_db():
 @app.route('/api/v1/db/read', methods=["POST"])
 def read_from_db():
     request_data = request.get_json(force=True)
+
+    if 'count' in request_data:
+        try:
+            collection = db[request_data['table']]
+            res = [collection.count_documents({})]
+            return jsonify(res)
+        except:
+            return Response(status=400)
+
     try:
         table = request_data['table']
         columns = request_data['columns']
@@ -261,14 +270,6 @@ def read_from_db():
                     i["timestamp"] = convert_datetime_to_timestamp(i["timestamp"])
                 res.append(i)
 
-            return jsonify(res)
-        except:
-            return Response(status=400)
-
-    if 'count' in request_data:
-        try:
-            collection = db[table]
-            res = [collection.count_documents()]
             return jsonify(res)
         except:
             return Response(status=400)
