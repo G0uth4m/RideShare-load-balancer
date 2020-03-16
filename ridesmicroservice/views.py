@@ -1,5 +1,5 @@
 from flask import Flask, request, Response, jsonify
-from ridesmicroservice.config import db, areas, ip_port, users_hostname
+from ridesmicroservice.config import db, areas, ip_port, users_hostname, rides_dns_name
 import requests
 from datetime import datetime
 
@@ -300,7 +300,7 @@ def clear_db():
 
 
 def isUserPresent(username):
-    response = requests.get('http://' + users_hostname + '/api/v1/users')
+    response = requests.get('http://' + users_hostname + '/api/v1/users', header={"Origin": rides_dns_name})
     return response.status_code != 400 and username in response.json()
 
 
@@ -325,12 +325,12 @@ def convert_timestamp_to_datetime(time_stamp):
 
 
 def increment_requests_count():
-    f = open("requests_count.txt", "r+")
+    f = open("requests_count.txt", "r")
     count = int(f.read())
-    f.seek(0)
-    f.write(str(count + 1))
-    f.truncate()
     f.close()
+    f2 = open("requests_count.txt", "w")
+    f2.write(str(count + 1))
+    f2.close()
 
 
 if __name__ == "__main__":
