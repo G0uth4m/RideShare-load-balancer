@@ -152,7 +152,6 @@ def read_from_db():
 
 @app.route('/api/v1/db/clear', methods=["POST"])
 def clear_db():
-    increment_requests_count()
     collection1 = db["users"]
     collection2 = db["rides"]
     try:
