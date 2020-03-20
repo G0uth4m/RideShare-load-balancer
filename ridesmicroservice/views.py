@@ -6,6 +6,12 @@ from datetime import datetime
 app = Flask(__name__)
 
 
+@app.errorhandler(405)
+def four_zero_five(e):
+    increment_requests_count()
+    return Response(status=405)
+
+
 @app.route('/api/v1/rides', methods=["POST"])
 def create_ride():
     increment_requests_count()
