@@ -52,9 +52,6 @@ def add_user():
 @app.route('/api/v1/users/<username>', methods=["DELETE"])
 def remove_user(username):
     increment_requests_count()
-    # if check_rides_joined_or_created_by_user(username):
-    #     # print("User has a ride created or joined. User can't be deleted")
-    #     return Response(status=400)
 
     post_data = {'column': '_id', 'delete': username, 'table': 'users'}
     response = requests.post('http://' + ip_port + '/api/v1/db/write', json=post_data)
@@ -169,11 +166,6 @@ def clear_db():
         return Response(status=200)
     except:
         return Response(status=400)
-
-
-def check_rides_joined_or_created_by_user(username):
-    response = requests.get('http://' + rides_hostname + '/api/v1/list_rides/'+username)
-    return response.status_code != 400 and response.json() != []
 
 
 def increment_requests_count():

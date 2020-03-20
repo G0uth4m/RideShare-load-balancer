@@ -140,17 +140,6 @@ def get_details_of_ride_or_join_ride_or_delete_ride(rideId):
         return jsonify({})
 
 
-@app.route('/api/v1/list_rides/<username>', methods=["GET"])
-def list_rides_created_or_joined_by_user(username):
-    post_data = {"many": 1, "table": "rides", "columns": ['_id'], "where": {"$or": [{"users": username}, {"created_by": username}]}}
-    response = requests.post('http://' + ip_port + '/api/v1/db/read', json=post_data)
-    res = []
-    print(response.json())
-    for i in response.json():
-        res.append(i['_id'])
-    return jsonify(res)
-
-
 @app.route('/api/v1/rides/count', methods=["GET"])
 def get_no_of_rides():
     increment_requests_count()
